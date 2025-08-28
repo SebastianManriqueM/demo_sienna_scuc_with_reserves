@@ -46,3 +46,11 @@ Status `C:\Users\smachado\repositories\demo_sienna_scuc_with_reserves\demo_scuc_
   [ade2ca70] Dates v1.11.0
   [56ddb016] Logging v1.11.0
 ```
+
+# STUDY CASES
+This table provides a general overvie of each case study/demo in this repo
+
+| File                                   | System      | Areas | Reserves products                                               |Outage          |
+|----------------------------------------|-------------|-------|-----------------------------------------------------------------|----------------|
+| simulation_scuc_g-1_reserves_5bus.jl   | IEEE 5-bus  | 1     | Global Up, Global down                                          |1 outage        |
+| simulation_scuc_g-1_reserves_RTS.jl    | RTS-GMLC    | 3     | By area sppining up, By area sppining up, Global Up, Global down|1 outage by area|

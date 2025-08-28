@@ -2,7 +2,7 @@
 
 julia_version = "1.11.5"
 manifest_format = "2.0"
-project_hash = "9df1d73da01b0ef0013fa1859398dd0da4010ea6"
+project_hash = "cc61107cf83fffb8f051da1df05251a76ebba44f"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "60665b326b75db6517939d0e1875850bc4a54368"
@@ -425,6 +425,14 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "92f65c4d78ce8cdbb6b68daf88889950b0a99d11"
 uuid = "e33a78d0-f292-5ffc-b300-72abe9b543c8"
 version = "2.12.1+0"
+
+[[deps.HydroPowerSimulations]]
+deps = ["Dates", "InfrastructureSystems", "JuMP", "PowerSimulations", "PowerSystems"]
+git-tree-sha1 = "acc0cd46b1aca5f5f2ca4d9d1c311718d4a3f3a7"
+repo-rev = "psy5"
+repo-url = "https://github.com/NREL-Sienna/HydroPowerSimulations.jl.git"
+uuid = "fc1677e0-6ad7-4515-bf3a-bd6bf20a0b1b"
+version = "0.11.1"
 
 [[deps.HypergeometricFunctions]]
 deps = ["LinearAlgebra", "OpenLibm_jll", "SpecialFunctions"]
@@ -1181,6 +1189,12 @@ version = "1.4.2"
 git-tree-sha1 = "cd1659ba0d57b71a464a29e64dbc67cfe83d54e7"
 uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
 version = "1.6.1"
+
+[[deps.Xpress]]
+deps = ["Libdl", "MathOptInterface"]
+git-tree-sha1 = "f48ea69baa747f63b0d08c89ce7bc38d8ef62bd4"
+uuid = "9e70acf3-d6c9-5be6-b5bd-4e2c73e3e054"
+version = "0.17.1"
 
 [[deps.YAML]]
 deps = ["Base64", "Dates", "Printf", "StringEncodings"]

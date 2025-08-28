@@ -1,6 +1,7 @@
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 HiGHS = "87dc4568-4c63-4d18-b0c0-bb2238e4078b"
+HydroPowerSimulations = "fc1677e0-6ad7-4515-bf3a-bd6bf20a0b1b"
 InfrastructureSystems = "2cd47ed4-ca9b-11e9-27f2-ab636a7671f1"
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
 PowerFlows = "94fada2c-fd9a-4e89-8d82-81405f5cb4f6"
@@ -9,3 +10,4 @@ PowerSimulations = "e690365d-45e2-57bb-ac84-44ba829e73c4"
 PowerSystemCaseBuilder = "f00506e0-b84f-492a-93c2-c0a9afc4364e"
 PowerSystems = "bcd98974-b02a-5e2f-9ee0-a103f5c450dd"
 TimeSeries = "9e3dc215-6440-5c97-bce1-76c03772f85e"
+Xpress = "9e70acf3-d6c9-5be6-b5bd-4e2c73e3e054"

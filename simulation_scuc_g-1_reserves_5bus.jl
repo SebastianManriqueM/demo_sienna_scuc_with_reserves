@@ -54,7 +54,7 @@ optimizer = optimizer_with_attributes(
     "mip_rel_gap" => mip_gap)
 
 #Uncoment the following line if you want to skip PowerSystemCaseBuilder setup and just load the system_to_file (and comment "sys = build_system()")
-#sys = system("c_sys5_uc.json")
+#sys = system("uc_5bus_g-1.json")
 sys = build_system(PSITestSystems, "c_sys5_uc", add_reserves = true)
 
 #################################### 

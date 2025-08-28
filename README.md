@@ -11,7 +11,7 @@ To run the scripts in this repository, install the following Julia packages and 
 - HydroPowerSimulations v0.11.1 `https://github.com/NREL-Sienna/HydroPowerSimulations.jl.git#psy5`
 - InfrastructureSystems v2.6.0 `https://github.com/NREL-Sienna/InfrastructureSystems.jl.git#main`
 - PowerFlows v0.9.0 `https://github.com/NREL-Sienna/PowerFlows.jl.git#psy5`
-- PowerNetworkMatrices v0.13.0 `https://github.com/NREL-Sienna/PowerNetworkMatrices.jl.git#mb/psy5
+- PowerNetworkMatrices v0.13.0 `https://github.com/NREL-Sienna/PowerNetworkMatrices.jl.git#psy5
 - PowerSimulations v0.30.1 `https://github.com/NREL-Sienna/PowerSimulations.jl.git#jd/sc_models_fixes`
 - PowerSystemCaseBuilder v1.3.11 `C:\Users\smachado\repositories\PowerSystemCaseBuilder.jl`
 - PowerSystems v4.6.2 `https://github.com/NREL-Sienna/PowerSystems.jl.git#psy5`

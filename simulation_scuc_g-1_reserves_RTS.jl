@@ -71,7 +71,7 @@ optimizer = optimizer_with_attributes(
     "MIPRELSTOP" => mip_gap)
 
 #Uncoment the following line if you want to skip PowerSystemCaseBuilder setup and just load the system_to_file (and comment "sys = build_system()")
-#sys = system("uc_5bus_g-1.json")
+#sys = system("RTS_g-1.json")
 sys = build_system(PSISystems, "modified_RTS_GMLC_DA_sys")#THIS SYSTEM HAS 4 DIFFERENT RESERVES UP DEFINED:
 
 #PRINT THE RESERVE PRODUCTS AND ITS CONTRIBUTTING DEVICES AND AREAS
@@ -218,4 +218,4 @@ keys_constr = collect(keys(constr))
 expr = model.internal.container.expressions
 keys_expr = collect(keys(expr))
 
-#to_json(sys, "uc_5bus_g-1.json"; pretty = true)
+to_json(sys, "RTS_g-1.json"; pretty = true)

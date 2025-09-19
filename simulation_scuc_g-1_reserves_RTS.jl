@@ -71,8 +71,8 @@ optimizer = optimizer_with_attributes(
     "MIPRELSTOP" => mip_gap)
 
 #Uncoment the following line if you want to skip PowerSystemCaseBuilder setup and just load the system_to_file (and comment "sys = build_system()")
-#sys = system("RTS_g-1.json")
-sys = build_system(PSISystems, "modified_RTS_GMLC_DA_sys")#THIS SYSTEM HAS 4 DIFFERENT RESERVES UP DEFINED:
+sys = system("RTS_g-1.json")
+#sys = build_system(PSISystems, "modified_RTS_GMLC_DA_sys")#THIS SYSTEM HAS 4 DIFFERENT RESERVES UP DEFINED:
 
 #PRINT THE RESERVE PRODUCTS AND ITS CONTRIBUTTING DEVICES AND AREAS
 reserves_up = get_components(VariableReserve{ReserveUp}, sys)
@@ -111,7 +111,7 @@ end
 
 template = ProblemTemplate(
     NetworkModel(
-        PTDFPowerModel; #SecurityConstrainedPTDFPowerModel;  #PTDFPowerModel;
+        AreaPTDFPowerModel; #SecurityConstrainedPTDFPowerModel;  #PTDFPowerModel; AreaPTDFPowerModel
         use_slacks = false,
         PTDF_matrix = PTDF(sys),
     ),

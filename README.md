@@ -39,10 +39,10 @@ Status `C:\Users\smachado\repositories\demo_sienna_scuc_with_reserves\demo_scuc_
   [2cd47ed4] InfrastructureSystems v2.6.0 `https://github.com/NREL-Sienna/InfrastructureSystems.jl.git#main`
   [94fada2c] PowerFlows v0.9.0 `https://github.com/NREL-Sienna/PowerFlows.jl.git#psy5`
   [bed98974] PowerNetworkMatrices v0.13.0 `https://github.com/NREL-Sienna/PowerNetworkMatrices.jl.git#psy5`
-  [e690365d] PowerSimulations v0.30.1 `https://github.com/NREL-Sienna/PowerSimulations.jl.git#jd/sc_models_fixes`
+  [e690365d] PowerSimulations v0.30.1 `https://github.com/NREL-Sienna/PowerSimulations.jl/tree/sm/restore_scuc`
   [f00506e0] PowerSystemCaseBuilder v1.3.11 `C:\Users\smachado\repositories\PowerSystemCaseBuilder.jl`
   [bcd98974] PowerSystems v4.6.2 `https://github.com/NREL-Sienna/PowerSystems.jl.git#psy5`
-  [9e3dc215] TimeSeries v0.24.2
+  [9e3dc215] TimeSeries v0.25.0
   [ade2ca70] Dates v1.11.0
   [56ddb016] Logging v1.11.0
 ```
@@ -50,7 +50,10 @@ Status `C:\Users\smachado\repositories\demo_sienna_scuc_with_reserves\demo_scuc_
 # STUDY CASES
 This table provides a general overvie of each case study/demo in this repo
 
-| File                                   | System      | Areas | Reserves products                                               |Outage          |
-|----------------------------------------|-------------|-------|-----------------------------------------------------------------|----------------|
-| simulation_scuc_g-1_reserves_5bus.jl   | IEEE 5-bus  | 1     | Global Up, Global down                                          |1 outage        |
-| simulation_scuc_g-1_reserves_RTS.jl    | RTS-GMLC    | 3     | By area sppining up, By area sppining up, Global Up, Global down|1 outage by area|
+| File                                               | System      | Areas | Reserves products                                               |Outage          |
+|----------------------------------------------------|-------------|-------|-----------------------------------------------------------------|----------------|
+| simulation_scuc_g-1_reserves_5bus.jl               | IEEE 5-bus  | 1     | Global Up, Global down                                          |1 outage        |
+| simulation_areaptdf_scuc_g-1_reserves-2area_5bus.jl| 2A 5-bus*   | 2     | Area1 Up, Area1 down, Area2 Up, Area2 down                      |1 outage by area|
+| simulation_scuc_g-1_reserves_RTS.jl                | RTS-GMLC*   | 3     | By area sppining up, By area sppining up, Global Up, Global down|1 outage by area|
+
+*For this system now is posible to configure it usinf PTDFPowerModel and AreaPTDFPowerModel (Energy balancing by area) 

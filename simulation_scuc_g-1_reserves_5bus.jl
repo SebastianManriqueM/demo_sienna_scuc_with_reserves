@@ -54,8 +54,8 @@ optimizer = optimizer_with_attributes(
     "mip_rel_gap" => mip_gap)
 
 #Uncoment the following line if you want to skip PowerSystemCaseBuilder setup and just load the system_to_file (and comment "sys = build_system()")
-#sys = system("uc_5bus_g-1.json")
-sys = build_system(PSITestSystems, "c_sys5_uc", add_reserves = true)
+sys = System("systems_json/uc_5bus_g-1.json")
+#sys = build_system(PSITestSystems, "c_sys5_uc", add_reserves = true)
 
 #################################### 
 #INCLUDE OUTAGE AND THE RESERVE PRODUCT THAT SHOULD RESPOND TO THE OUTAGE 

@@ -32,41 +32,31 @@ optimizer = optimizer_with_attributes(
     Xpress.Optimizer,
     "MIPRELSTOP" => mip_gap)
 
-sys = build_system(PSISystems, "modified_RTS_GMLC_DA_sys")#THIS SYSTEM HAS 4 DIFFERENT RESERVES UP DEFINED:
-#to_json(sys, "RTS_g-1.json"; pretty = true)
-#PRINT THE RESERVE PRODUCTS AND ITS CONTRIBUTTING DEVICES AND AREAS
-reserves_up = get_components(VariableReserve{ReserveUp}, sys)
-
-contributing_devices_dict = Dict{String, Vector{String}}()
-contributing_devices_area_dict = Dict{String, Vector{String}}()
-for reserve in reserves_up
-    println("Reserve Up Product: ", get_name(reserve))
-    contributing_devices_dict[get_name(reserve)] = get_name.(get_contributing_devices(sys, reserve))
-    contributing_devices_area_dict[get_name(reserve)] = get_name.(get_area.(get_bus.(get_contributing_devices(sys, reserve))))
-    println("  Contributing Devices: ", contributing_devices_dict[get_name(reserve)])
-    println("  Contributing Devices Area: ", contributing_devices_area_dict[get_name(reserve)])
+sys = build_system(PSISystems, "modified_RTS_GMLC_DA_sys")
+lines_by_area = Dict{String, Any}()
+transformers_by_area = Dict{String, Any}()
+for area in get_components(Area, sys)
+    @info("Getting lines and transformers for area: $(get_name(area))")
+    lines = get_components(l -> l.arc.from.area == area && l.arc.to.area == area, Line, sys)
+    @show get_name.(lines)
+    lines_by_area[get_name(area)] = lines
+    transformers = get_components(t -> t.arc.from.area == area && t.arc.to.area == area, TapTransformer, sys)
+    @show get_name.(transformers)
+    transformers_by_area[get_name(area)] = transformers
 end
 
-
-#################################### 
-#INCLUDE OUTAGE AND THE RESERVE PRODUCT THAT SHOULD RESPOND TO THE OUTAGE 
-####################################
-#INCLUDE IN THIS DICT ALL THE RESERVE PRODUCTS THAT SHOULD RESPOND TO THE OUTAGE (GENERATORS SPECIFIED IN THE gens_outages_names LIST)
-responding_reserves_list = [Dict(PSY.VariableReserve{ReserveUp} => "Spin_Up_R1")
-                            Dict(PSY.VariableReserve{ReserveUp} => "Spin_Up_R2")
-                            Dict(PSY.VariableReserve{ReserveUp} => "Spin_Up_R3")]
-
 # Add Here the names of the generators to be considered for outages in the G-k formulation
-gens_outages_names_list = [[ ["123_STEAM_2"], ["123_STEAM_3"], ["113_CT_1"] ], #["121_NUCLEAR_1"]
-                           [ ["202_STEAM_3"], ["207_CT_1"] ], #["223_CT_6"], ["218_CC_1"]
-                           [ ["322_CT_6"], ["316_STEAM_1"], ["318_CC_1"] ] ] #, , 
-outage_mappings = add_multiple_outages_to_scuc!(sys, PSY.Generator,responding_reserves_list, gens_outages_names_list, Outage_type=GeometricDistributionForcedOutage)
+lines_outages_names_list = [ ["A34"], ["A4"], ["A22"], ["A8"], ["A25-1"], ["A12-1"], ["A33-1"], ["A32-1"], 
+                             ["B5"], ["B2"], ["B23"], ["B19"], ["B28"], ["B32-1"], ["B33-1"], ["B13-2"],
+                             ["C21"], ["C3"], ["C26"], ["C9"], ["C30"], ["C10"], ["C31-2"], ["C25-1"] ] #,
+outage_mappings = add_multiple_outages_to_scuc!(sys, PSY.Line, lines_outages_names_list, Outage_type=GeometricDistributionForcedOutage)
 
 template = ProblemTemplate(
     NetworkModel(
         PTDFPowerModel;
         use_slacks = false,
         PTDF_matrix = PTDF(sys),
+        LODF_matrix = LODF(sys),
     ),
 )
 
@@ -77,9 +67,9 @@ set_device_model!(template, HydroDispatch, HydroDispatchRunOfRiver)
 
 set_device_model!(template, PowerLoad, StaticPowerLoad)
 
-set_device_model!(template, DeviceModel(Line, StaticBranch;
+set_device_model!(template, DeviceModel(Line, SecurityConstrainedStaticBranch;
     use_slacks = false)) #
-set_device_model!(template, DeviceModel(TapTransformer, StaticBranch;
+set_device_model!(template, DeviceModel(TapTransformer, SecurityConstrainedStaticBranch;
     use_slacks = false)) #
 set_device_model!(template, DeviceModel(TwoTerminalGenericHVDCLine,
                                 HVDCTwoTerminalLossless))
@@ -87,19 +77,19 @@ set_device_model!(template, DeviceModel(TwoTerminalGenericHVDCLine,
 set_service_model!(template,
     ServiceModel(
         VariableReserve{ReserveUp},
-        RampReserveWithDeliverabilityConstraints,
+        RangeReserve,
         "Spin_Up_R1",
     ))
 set_service_model!(template,
     ServiceModel(
         VariableReserve{ReserveUp},
-        RampReserveWithDeliverabilityConstraints,
+        RangeReserve,
         "Spin_Up_R2",
     ))
 set_service_model!(template,
     ServiceModel(
         VariableReserve{ReserveUp},
-        RampReserveWithDeliverabilityConstraints,
+        RangeReserve,
         "Spin_Up_R3",
     ))
 
@@ -153,7 +143,7 @@ sim = Simulation(;
 )
 
 
-build!(sim; console_level = Logging.Debug)
+build!(sim; console_level = Logging.Info)
  
 execute!(sim)
 
@@ -163,20 +153,15 @@ uc = get_decision_problem_results(results, "UC")
 therm_df = read_realized_variable(uc, "ActivePowerVariable__ThermalStandard", table_format=TableFormat.WIDE)
 Pline_df = read_realized_variable(uc, "FlowActivePowerVariable__Line", table_format=TableFormat.WIDE)
 
-scuc_res_spin_r1 = get_scuc_results(
+scuc_res_line = get_scuc_results(
     uc,
     outage_mappings,
-    "Spin_Up_R1",
+    "",
 )
-scuc_res_spin_r2 = get_scuc_results(
+scuc_res_transformer = get_scuc_results(
     uc,
     outage_mappings,
-    "Spin_Up_R2",
-)
-scuc_res_spin_r3 = get_scuc_results(
-    uc,
-    outage_mappings,
-    "Spin_Up_R3",
+    "",
 )
 
 

@@ -10,6 +10,6 @@ end
 
 abstract type SCUCResults end
 struct PostContingencyResults <: SCUCResults
-    variables::Dict{String, DataFrame}
+    variables::Union{Dict{String, DataFrame}, Nothing}
     flow_expressions::Dict{String, DataFrame}
 end

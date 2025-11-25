@@ -63,7 +63,7 @@ outage_mappings = add_multiple_outages_to_scuc!(sys, responding_reserves_list, g
 
 template = ProblemTemplate(
     NetworkModel(
-        AreaPTDFPowerModel; #SecurityConstrainedPTDFPowerModel;  #PTDFPowerModel; AreaPTDFPowerModel
+        PTDFPowerModel;
         use_slacks = false,
         PTDF_matrix = PTDF(sys),
     ),

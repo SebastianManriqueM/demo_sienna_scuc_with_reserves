@@ -7,6 +7,7 @@ const IS = InfrastructureSystems
 using PowerSystems
 const PSY = PowerSystems
 using PowerSystemCaseBuilder
+const PSB = PowerSystemCaseBuilder
 using PowerNetworkMatrices
 
 using PowerSimulations
